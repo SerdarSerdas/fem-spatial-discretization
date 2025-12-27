@@ -117,6 +117,8 @@ These provide the standard link between isoparametric derivatives and physical g
 
 ## **<u>Integration</u>**
 
+For the application of the finite element method, a numerical integration scheme is required to evaluate integrals of functions $f$ over each element domain $\mathcal{B}_e$. This is accomplished by means of Gauss quadrature, in which the integrand is evaluated at a set of integration points in the isoparametric domain and weighted by the corresponding Gauss weights $w_GP$. Using the mapping from the reference element $\hat{\cal B}_e$ to the physical element ${\cal B}_e$, one obtains
+
 Numerical integration over element domain $\mathcal{B}_e$ uses **Gauss quadrature**:
 
 $$\int_{\mathcal{B}_e} f(\boldsymbol{X}) \, \mathrm{d}V = \int_{\hat{\mathcal{B}}_e} f(\boldsymbol{\xi}) \, \det\big(\boldsymbol{J}(\boldsymbol{\xi})\big) \, \mathrm{d}V_e$$
