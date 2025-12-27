@@ -58,5 +58,16 @@ Figure~\ref{fig:Chap3_Discretization} illustrates a central step in the finite e
 
 On the right, the “Isoparametric space” shows a reference triangle in the local coordinate system $(\xi,\eta)$, which serves as a standardized template for all elements in the physical domain. This reference element $\hat{\cal B}_e$ has a simple canonical shape and provides a convenient setting for defining shape functions and performing numerical integration. The mapping from isoparametric (reference) space to physical space is essential for an accurate representation of curved geometries and general element shapes, since it permits the consistent evaluation of integrals and interpolation functions over each element.
 
+The discretization process is formalized by
+$$\mathcal{B}_0 \approx \mathcal{B}_0^h = \bigcup_{e = 1}^{n_{\mathrm{elem}}} \mathcal{B}_0^e$$
+
+which states that the original domain is approximated by the union of all element domains $\mathcal{B}_0^e$. Each element carries geometric information as well as the associated physical fields, and the resulting mesh provides a flexible framework for the numerical solution of partial differential equations on arbitrary domains. This combined use of physical and isoparametric spaces underpins the flexibility and accuracy of the finite element method for complex geometries.
+
+Every finite element is associated with spatial and physical quantities, for instance kinematical variables. These quantities are approximated by means of shape functions. The spatial coordinates within an element can be expressed in the reference and in the current configuration as
+$$\boldsymbol{X} \approx \boldsymbol{X}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{X}_I, \qquad \boldsymbol{x} \approx \boldsymbol{x}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{x}_I$$
+
+where $N_I$ denotes the shape function associated with node $I$. In the same way, the physical fields of interest, such as velocity, displacement, electric potential, concentration, temperature, or pressure, are approximated within each element according to
+$$\boldsymbol{V} \approx \boldsymbol{V}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{V}_I, \qquad \boldsymbol{v} \approx \boldsymbol{v}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{v}_I$$
+
 ![Physical vs Isoparametric space](Fig_Discretization_Triangle.png)
 *Figure 1: Domain discretization with isoparametric mapping*
