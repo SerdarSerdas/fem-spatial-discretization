@@ -66,11 +66,11 @@ which states that the original domain is approximated by the union of all elemen
 
 Every finite element is associated with spatial and physical quantities, for instance kinematical variables. These quantities are approximated by means of shape functions. The spatial coordinates within an element can be expressed in the reference and in the current configuration as
 
-$$\boldsymbol{X} \approx \boldsymbol{X}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{X}_I, \qquad \boldsymbol{x} \approx \boldsymbol{x}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{x}_I$$
+$$\boldsymbol{X} \approx \boldsymbol{X}_h = \sum_{I=1}^{N} N_I  \boldsymbol{X}_I, \qquad \boldsymbol{x} \approx \boldsymbol{x}_h = \sum_{I=1}^{N} N_I  \boldsymbol{x}_I$$
 
 where $N_I$ denotes the shape function associated with node $I$. In the same way, the physical fields of interest, such as velocity, displacement, electric potential, concentration, temperature, or pressure, are approximated within each element according to
 
-$$\boldsymbol{V} \approx \boldsymbol{V}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{V}_I, \qquad \boldsymbol{v} \approx \boldsymbol{v}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{v}_I$$
+$$\boldsymbol{V} \approx \boldsymbol{V}_h = \sum_{I=1}^{N} N_I  \boldsymbol{V}_I, \qquad \boldsymbol{v} \approx \boldsymbol{v}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{v}_I$$.
 
 <div align="center">
 
@@ -79,4 +79,54 @@ $$\boldsymbol{V} \approx \boldsymbol{V}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{V}
 **Figure 1**: Discretization ${\cal B}^h$ of the domain ${\cal B}$ in 2D using triangular elements with element domain ${\cal B}_e$ and mapping from parameter space $\hat{\cal B}_e$ to physical space.  
 
 </div>
+
+The interpolation functions are defined in terms of the natural coordinates $\boldsymbol{\xi} = \{\xi,\eta,\zeta\}$ in the isoparametric space. The element $\mathcal{B}_e$ in the physical space is obtained by an isoparametric mapping $\boldsymbol{J}_e$ from the reference element $\hat{\mathcal{B}}_e$. 
+
+**Transformation matrices**:
+
+$$\boldsymbol{J}_e = \mathrm{Grad}_{\boldsymbol{\xi}}  \boldsymbol{X}_e = \frac{\partial \boldsymbol{X}}{\partial \boldsymbol{\xi}} = \sum_{I=1}^{N} \boldsymbol{X}_I \otimes \nabla_{\boldsymbol{\xi}} N_I$$
+
+$$\boldsymbol{j}_e = \mathrm{grad}_{\boldsymbol{\xi}}  \boldsymbol{x}_e = \frac{\partial \boldsymbol{x}}{\partial \boldsymbol{\xi}} = \sum_{I=1}^{N} \boldsymbol{x}_I \otimes \nabla_{\boldsymbol{\xi}} N_I$$
+
+where $\nabla_{\boldsymbol{\xi}} N_I$ denotes the gradient of the scalar shape function $N_I$ with respect to the isoparametric coordinates.
+
+**Deformation gradient**:
+$$\boldsymbol{F} = \frac{\partial \boldsymbol{x}}{\partial \boldsymbol{X}} = \boldsymbol{j}_e  \boldsymbol{J}_e^{-1}$$
+
+**Figure 1** illustrates the transformation from parameter space to reference configuration.
+
+Since the governing PDEs contain spatial derivatives, these must be approximated using finite element interpolation. For element field $\boldsymbol{v}_e$:
+
+**Gradients**:
+
+$$\mathrm{Grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \nabla_{\boldsymbol{X}} N^I$$
+$$\mathrm{grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \nabla_{\boldsymbol{x}} N^I$$
+
+**Chain rule** (derivatives w.r.t. physical coordinates):
+
+$$\nabla_{\boldsymbol{X}} N^I = \boldsymbol{J}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
+$$\nabla_{\boldsymbol{x}} N^I = \boldsymbol{j}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
+
+**Final form**:
+
+$$\mathrm{Grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \boldsymbol{J}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
+$$\mathrm{grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \boldsymbol{j}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
+
+These provide the standard link between isoparametric derivatives and physical gradients.
+
+
+## **<u>Integration</u>**
+
+Numerical integration over element domain $\mathcal{B}_e$ uses **Gauss quadrature**:
+
+$$\int_{\mathcal{B}_e} f(\boldsymbol{X}) \, \mathrm{d}V = \int_{\hat{\mathcal{B}}_e} f(\boldsymbol{\xi}) \, \det\big(\boldsymbol{J}(\boldsymbol{\xi})\big) \, \mathrm{d}V_e$$
+
+$$\approx \sum_{GP=1}^{n_{\mathrm{GP}}} f(\boldsymbol{\xi}_{GP}) \, \det\big(\boldsymbol{J}(\boldsymbol{\xi}_{GP})\big) \, w_{GP}$$
+
+where:
+- $\boldsymbol{J}(\boldsymbol{\xi})$ = Jacobian of isoparametric mapping
+- $\boldsymbol{\xi}_{GP}$ = Gauss points in reference element
+- $w_{GP}$ = Gauss weights
+- $n_{\mathrm{GP}}$ = number of quadrature points
+
 
