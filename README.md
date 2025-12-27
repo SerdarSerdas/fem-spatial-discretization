@@ -117,13 +117,19 @@ These provide the standard link between isoparametric derivatives and physical g
 
 ## **<u>Integration</u>**
 
-For the application of the finite element method, a numerical integration scheme is required to evaluate integrals of functions $f$ over each element domain $\mathcal{B}_e$. This is accomplished by means of Gauss quadrature, in which the integrand is evaluated at a set of integration points in the isoparametric domain and weighted by the corresponding Gauss weights $w_GP$. Using the mapping from the reference element $\hat{\cal B}_e$ to the physical element ${\cal B}_e$, one obtains
+For the application of the finite element method, a numerical integration scheme is required to evaluate integrals of functions $f$ over each element domain 
+$\mathcal{B_e}$. This is accomplished by means of Gauss quadrature, in which the integrand is evaluated at a set of integration points in the isoparametric domain and weighted by the corresponding Gauss weights $w_{GP}$. Using the mapping from the reference element $\hat{\mathcal{B}}_e$ to the physical element $\mathcal{B}_e$, one obtains
 
-Numerical integration over element domain $\mathcal{B}_e$ uses **Gauss quadrature**:
-
-$$\int_{\mathcal{B}_e} f(\boldsymbol{X}) \, \mathrm{d}V = \int_{\hat{\mathcal{B}}_e} f(\boldsymbol{\xi}) \, \det\big(\boldsymbol{J}(\boldsymbol{\xi})\big) \, \mathrm{d}V_e$$
-
-$$\approx \sum_{GP=1}^{n_{\mathrm{GP}}} f(\boldsymbol{\xi}_{GP}) \, \det\big(\boldsymbol{J}(\boldsymbol{\xi}_{GP})\big) \, w_{GP}$$
+$$
+\int_{\mathcal{B}_e} f(\boldsymbol{X}) \mathrm{d}V
+= \int_{\hat{\mathcal{B}}_e} f(\boldsymbol{\xi}) 
+\det\big(\boldsymbol{J}(\boldsymbol{\xi})\big) \mathrm{d}V_e
+\approx
+\sum_{GP=1}^{n_{\mathrm{GP}}}
+f(\boldsymbol{\xi}_{GP}) 
+\det\big(\boldsymbol{J}(\boldsymbol{\xi}_{GP})\big) 
+w_{GP}.
+$$
 
 where:
 - $\boldsymbol{J}(\boldsymbol{\xi})$ = Jacobian of isoparametric mapping
