@@ -30,3 +30,9 @@
 | $W^{k,p}(\mathcal{B})$ | Sobolev space of order $k$ with integrability exponent $p$ |
 | $H^k(\mathcal{B})$ | Sobolev (Hilbert) space $W^{k,2}(\mathcal{B})$ |
 | $P_r, Q_r$ | Lagrange elements of degree $r$ (triangular / 1D, quadrilateral) |
+
+
+
+Spatial discretization of partial differential equations in mechanics can be carried out using various numerical frameworks, most prominently the finite difference method, the finite volume method, and the finite element method (FEM). Each of these approaches is based on a different discretization philosophy and exhibits distinct advantages and limitations when applied to problems in continuum mechanics and related fields.
+
+The finite difference method, historically the earliest of the three, relies on structured grids and on the systematic use of Taylor-series expansions to approximate spatial derivatives. This inherently local construction is straightforward on regular meshes but tends to become cumbersome and less flexible when the underlying geometry involves complex shapes, curved boundaries, or highly heterogeneous domains. As a consequence, its applicability to multi-dimensional engineering problems with intricate geometrical features is often restricted.
