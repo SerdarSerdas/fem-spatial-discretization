@@ -72,5 +72,13 @@ where $N_I$ denotes the shape function associated with node $I$. In the same way
 
 $$\boldsymbol{V} \approx \boldsymbol{V}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{V}_I, \qquad \boldsymbol{v} \approx \boldsymbol{v}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{v}_I$$
 
-![Physical vs Isoparametric space](Fig_Discretization_Triangle.png)
-*Figure 1: Domain discretization with isoparametric mapping*
+<div align="center">
+
+![Domain discretization](Fig_Discretization_Triangle.png)
+
+**Figure 1**: Discretization $\mathcal{B}^h_0$ of $\mathcal{B}_0$ using triangular elements $\mathcal{B}_e$.  
+**Left**: Physical space with $\boldsymbol{J}_e$ mapping.  
+**Right**: Reference triangle $\hat{\mathcal{B}}_e$ in $(\xi,\eta)$.
+
+</div>
+
