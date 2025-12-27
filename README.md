@@ -58,7 +58,7 @@ Figure~\ref{fig:Chap3_Discretization} illustrates a central step in the finite e
 
 On the right, the “Isoparametric space” shows a reference triangle in the local coordinate system $(\xi,\eta)$, which serves as a standardized template for all elements in the physical domain. This reference element $\hat{\cal B}_e$ has a simple canonical shape and provides a convenient setting for defining shape functions and performing numerical integration. The mapping from isoparametric (reference) space to physical space is essential for an accurate representation of curved geometries and general element shapes, since it permits the consistent evaluation of integrals and interpolation functions over each element.
 
-The discretization process is formalized by $$\mathcal{B}_0 \approx \mathcal{B}_0^h = \bigcup_{e = 1}^{n_{\mathrm{elem}}} \mathcal{B}_0^e$$
+The discretization process is formalized by $\mathcal{B}_0 \approx \mathcal{B}_0^h = \bigcup_{e = 1}^{n_{\mathrm{elem}}} \mathcal{B}_0^e$
 
 which states that the original domain is approximated by the union of all element domains $\mathcal{B}_0^e$. Each element carries geometric information as well as the associated physical fields, and the resulting mesh provides a flexible framework for the numerical solution of partial differential equations on arbitrary domains. This combined use of physical and isoparametric spaces underpins the flexibility and accuracy of the finite element method for complex geometries.
 
