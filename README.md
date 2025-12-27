@@ -99,8 +99,8 @@ Since the governing PDEs contain spatial derivatives, these must be approximated
 
 **Gradients**:
 
-$$\mathrm{Grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \nabla_{\boldsymbol{X}} N^I$$
-$$\mathrm{grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \nabla_{\boldsymbol{x}} N^I$$
+$$\mathrm{Grad} \boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \nabla_{\boldsymbol{X}} N^I$$
+$$\mathrm{grad} \boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \nabla_{\boldsymbol{x}} N^I$$
 
 **Chain rule** (derivatives w.r.t. physical coordinates):
 
@@ -109,8 +109,8 @@ $$\nabla_{\boldsymbol{x}} N^I = \boldsymbol{j}_e^{-T}  \nabla_{\boldsymbol{\xi}}
 
 **Final form**:
 
-$$\mathrm{Grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \boldsymbol{J}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
-$$\mathrm{grad}\,\boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \boldsymbol{j}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
+$$\mathrm{Grad} \boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \boldsymbol{J}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
+$$\mathrm{grad} \boldsymbol{v}_e = \sum_{I=1}^{N} \boldsymbol{v}^I \otimes \boldsymbol{j}_e^{-T}  \nabla_{\boldsymbol{\xi}} N^I$$
 
 These provide the standard link between isoparametric derivatives and physical gradients.
 
@@ -137,4 +137,125 @@ where:
 - $w_{GP}$ = Gauss weights
 - $n_{\mathrm{GP}}$ = number of quadrature points
 
+
+
+### Interpolation functions
+
+For the approximation of the field quantities within the finite element framework, suitable interpolation functions are required. The choice of these functions is governed by the underlying interpolation spaces, which are introduced in the following subsections. Subsequently, the specific interpolation functions employed to approximate the primary and auxiliary variables in the different least-squares formulations are described. In particular, standard Lagrange interpolation polynomials are used to obtain conforming discretizations in $W^{1,p}(\mathcal{B})$.
+
+#### Function spaces and norms
+
+For an appropriate choice of interpolation spaces for the unknown fields, standard Sobolev and Hilbert spaces are adopted. The Sobolev spaces $W^{k,p}(\mathcal{B})$ are defined in terms of the Lebesgue spaces $L^p(\mathcal{B})$ for $1 \leq p < \infty$. The space $L^p(\mathcal{B})$ consists of all (equivalence classes of) measurable functions $y : \mathcal{B} \rightarrow \mathbb{R}$ that are $p$‑integrable on the domain $\mathcal{B}$, i.e.,
+
+$$
+L^p(\mathcal{B})
+  := { y : \mathcal{B} \rightarrow \mathbb{R}
+      \bigg|
+      \int_{\mathcal{B}} |y|^p \mathrm{d}V < \infty }.
+$$
+
+The associated norm on $L^p(\mathcal{B})$ is given by
+
+$$
+\|y\|_{L^p(\mathcal{B})}
+  := ( \int_{\mathcal{B}} |y|^p \, \mathrm{d}V )^{1/p},
+  \qquad 1 \le p < \infty,
+$$
+
+and for $p = \infty$ one defines
+
+$$
+\|y\|_{L^\infty(\mathcal{B})}
+:= \sup_{\boldsymbol{X} \in \mathcal{B}} |y(\boldsymbol{X})|.
+$$
+
+For $p \ge 1$, the space $L^p(\mathcal{B})$ equipped with this norm is a Banach space. The Sobolev space $W^{k,p}(\mathcal{B})$ for $k \in \mathbb{N}_0$ and $1 \le p \le \infty$ is defined as
+
+$$
+W^{k,p}(\mathcal{B})
+  := { y \in L^p(\mathcal{B}) \big|
+      D^\alpha y \in L^p(\mathcal{B})
+      \ \text{for all multi-indices } \alpha
+      \text{ with } |\alpha| \le k }.
+$$
+
+A norm on $W^{k,p}(\mathcal{B})$ is given by
+
+$$
+\|y\|_{W^{k,p}(\mathcal{B})}
+  := ( \sum_{|\alpha|\le k}
+      \|D^\alpha y\|_{L^p(\mathcal{B})}^p )^{1/p},
+  \qquad 1 \le p < \infty,
+$$
+
+with the usual modification for $p = \infty$. For $k=0$ one recovers $W^{0,p}(\mathcal{B}) = L^p(\mathcal{B})$. Of particular importance in finite element analysis is the case $p = 2$. The spaces 
+
+$$
+H^k(\mathcal{B}) := W^{k,2}(\mathcal{B}), \qquad k \in \mathbb{N}_0,
+$$
+
+are Hilbert spaces when equipped with the inner product
+
+$$
+\langle u, v \rangle_{H^k(\mathcal{B})}
+  := \sum_{|\alpha|\le k}
+     \int_{\mathcal{B}} D^\alpha u \, D^\alpha v \,\mathrm{d}V,
+$$
+
+and the corresponding norm
+
+$$
+\|u\|_{H^k(\mathcal{B})}
+  := \big( \langle u, u \rangle_{H^k(\mathcal{B})} \big)^{1/2}.
+$$
+
+In particular, $H^0(\mathcal{B}) = L^2(\mathcal{B})$ with the standard $L^2$ inner product
+
+$$
+\langle u, v \rangle_{L^2(\mathcal{B})}
+  := \int_{\mathcal{B}} u v \,\mathrm{d}V.
+$$ 
+
+These function spaces provide the natural setting for weak formulations and conforming finite element discretizations used in finite element theory
+
+
+
+
+#### Lagrange interpolation on 1D elements
+
+On the reference interval $\hat{I} = [-1,1]$ with nodal points ${\xi_i}^{n_{\mathrm{en}}}_{i=1}$, the Lagrange basis functions 
+
+$\{\ell_i(\xi)\}_{i=1}^{n_{\mathrm{en}}}$ satisfy
+
+$$
+\ell_i(\xi_j) = \delta_{ij}, \qquad i,j = 1,\dots,n_{\mathrm{en}},
+$$
+
+and can be written in the form
+
+$$
+\ell_i(\xi)
+  = \prod_{\substack{j=1 \\ j\neq i}}^{n_{\mathrm{en}}}
+    \frac{\xi - \xi_j}{\xi_i - \xi_j}.
+$$
+
+A scalar field $y$ is then approximated by
+
+$$
+y_h(\xi)
+  = \sum_{i=1}^{n_{\mathrm{en}}} y_i \, \ell_i(\xi).
+$$
+
+For later reference, the explicit shape functions for linear ($P_1$) and
+quadratic ($P_2$) 1D elements on $\hat{I}=[-1,1]$ are summarized below.
+
+| Element type        | Node | Shape function \(N^I(\xi)\)            |
+|---------------------|------|----------------------------------------|
+| \(P_1\) (linear)    | \(I=1\) | \(N^1(\xi) = \tfrac{1}{2}(1-\xi)\)  |
+|                     | \(I=2\) | \(N^2(\xi) = \tfrac{1}{2}(1+\xi)\)  |
+| \(P_2\) (quadratic) | \(I=1\) | \(N^1(\xi) = \tfrac{1}{2}\,\xi(\xi-1)\) |
+|                     | \(I=2\) | \(N^2(\xi) = \tfrac{1}{2}\,\xi(\xi+1)\) |
+|                     | \(I=3\) | \(N^3(\xi) = 1-\xi^2\)              |
+
+The construction for higher-order 1D elements is analogous; in the following, the concept is extended to two-dimensional triangular and quadrilateral elements.
 
