@@ -74,7 +74,7 @@ $$\boldsymbol{V} \approx \boldsymbol{V}_h = \sum_{I=1}^{N} N_I \, \boldsymbol{V}
 
 <div align="center">
 
-![Domain discretization](Fig_Discretization_Triangle.png)
+![Domain discretization](Fig_Discretization_Triangle_Snip.png)
 
 **Figure 1**: Discretization ${\cal B}^h$ of the domain ${\cal B}$ in 2D using triangular elements with element domain ${\cal B}_e$ and mapping from parameter space $\hat{\cal B}_e$ to physical space.  
 
